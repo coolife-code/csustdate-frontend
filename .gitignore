@@ -6,3 +6,7 @@ dist/
 .env*
 !.env.example
 !.env.production.example
+
+# Local SSH keys (never commit)
+.ssh_id_ed25519
+.ssh_id_ed25519.pub

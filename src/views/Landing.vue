@@ -19,6 +19,10 @@
           muted
           playsinline
           disablepictureinpicture
+          controlslist="nodownload nofullscreen noremoteplayback"
+          x5-video-player-type="h5"
+          x5-video-player-fullscreen="false"
+          webkit-playsinline
           tabindex="-1"
           aria-hidden="true"
         />

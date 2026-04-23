@@ -110,12 +110,19 @@
 
         <section class="relative overflow-hidden rounded-2xl border border-border bg-white p-lg md:p-xl shadow-sm">
           <video
-            class="pointer-events-none absolute inset-0 h-full w-full object-cover"
+            class="pointer-events-none select-none absolute inset-0 h-full w-full object-cover"
             :src="basicInfoBgVideo"
             autoplay
             loop
             muted
             playsinline
+            disablepictureinpicture
+            controlslist="nodownload nofullscreen noremoteplayback"
+            x5-video-player-type="h5"
+            x5-video-player-fullscreen="false"
+            webkit-playsinline
+            tabindex="-1"
+            aria-hidden="true"
           ></video>
           <div class="pointer-events-none absolute inset-0 bg-white/82 backdrop-blur-[1px]"></div>
           <div class="relative z-10">
