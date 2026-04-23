@@ -12,6 +12,7 @@
     <main class="max-w-6xl mx-auto px-md py-4xl">
       <div class="relative overflow-hidden text-center mb-4xl rounded-3xl border border-border/70 bg-white/80 p-2xl shadow-sm">
         <video
+          v-if="!isBaiduBrowser"
           :src="teaserVideoUrl"
           class="absolute inset-0 h-full w-full object-cover pointer-events-none select-none"
           autoplay
@@ -26,7 +27,8 @@
           tabindex="-1"
           aria-hidden="true"
         />
-        <div class="absolute inset-0 bg-white/78" />
+        <div v-else class="absolute inset-0 bg-gradient-to-b from-rose-100 via-white to-amber-50" />
+        <div v-if="!isBaiduBrowser" class="absolute inset-0 bg-white/78" />
         <div class="relative z-10">
         <p class="text-sm text-text-secondary tracking-[0.2em] mb-md">CSUST DATE · 双向为约</p>
         <h2 class="text-5xl font-serif font-bold mb-lg leading-tight">每周二的晚风，都会捎来一封温柔的信</h2>
@@ -86,9 +88,11 @@
 <script setup>
 import { onMounted, ref } from 'vue'
 import api from '@/api'
+import { useBrowserDetect } from '@/composables/useBrowserDetect'
 
 const registeredCount = ref(null)
 const teaserVideoUrl = new URL('../../fodder/d5e263288a5f1306024e46992b980f3c.webm', import.meta.url).href
+const { isBaiduBrowser } = useBrowserDetect()
 
 const loadRegisteredCount = async () => {
   try {

@@ -110,6 +110,7 @@
 
         <section class="relative overflow-hidden rounded-2xl border border-border bg-white p-lg md:p-xl shadow-sm">
           <video
+            v-if="!isBaiduBrowser"
             class="pointer-events-none select-none absolute inset-0 h-full w-full object-cover"
             :src="basicInfoBgVideo"
             autoplay
@@ -124,6 +125,7 @@
             tabindex="-1"
             aria-hidden="true"
           ></video>
+          <div v-else class="pointer-events-none absolute inset-0 bg-gradient-to-b from-rose-50 to-amber-50"></div>
           <div class="pointer-events-none absolute inset-0 bg-white/82 backdrop-blur-[1px]"></div>
           <div class="relative z-10">
             <h3 class="text-xl font-semibold mb-sm">匹配偏好</h3>
@@ -188,9 +190,11 @@
 import { ref, onMounted, computed, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/user'
+import { useBrowserDetect } from '@/composables/useBrowserDetect'
 import api from '@/api'
 
 const basicInfoBgVideo = new URL('../../fodder/もなかもち_tears.webm', import.meta.url).href
+const { isBaiduBrowser } = useBrowserDetect()
 
 const router = useRouter()
 const userStore = useUserStore()

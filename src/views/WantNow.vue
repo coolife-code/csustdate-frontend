@@ -1,6 +1,7 @@
 <template>
-  <div class="relative min-h-screen bg-black overflow-hidden">
+  <div class="relative min-h-screen overflow-hidden" :class="isBaiduBrowser ? 'bg-black' : 'bg-black'">
     <video
+      v-if="!isBaiduBrowser"
       :src="ghostVideoUrl"
       class="absolute inset-0 h-full w-full object-cover pointer-events-none select-none"
       autoplay
@@ -15,6 +16,7 @@
       tabindex="-1"
       aria-hidden="true"
     />
+    <div v-else class="absolute inset-0 bg-gradient-to-b from-gray-900 to-black" />
     <div class="absolute inset-0 bg-black/25" />
     <header class="relative z-10 px-md py-md">
       <button
@@ -29,9 +31,11 @@
 
 <script setup>
 import { useRouter } from 'vue-router'
+import { useBrowserDetect } from '@/composables/useBrowserDetect'
 
 const router = useRouter()
 const ghostVideoUrl = new URL('../../fodder/b736ad4ade518634bbd28a646a6e74fc.webm', import.meta.url).href
+const { isBaiduBrowser } = useBrowserDetect()
 
 const goBack = () => {
   router.back()
