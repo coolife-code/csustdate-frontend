@@ -51,7 +51,63 @@
           </div>
         </div>
       </section>
+
+      <section class="rounded-2xl border border-border bg-white p-xl shadow-sm">
+        <h2 class="text-xl font-semibold mb-md">用户群</h2>
+        <p class="text-sm text-text-secondary mb-lg">想找组织的话，可以进群看看通知和大家的聊天节奏。</p>
+        <button
+          @click="showGroupQr = true"
+          class="px-lg py-sm rounded-full bg-primary text-white hover:bg-secondary transition"
+        >
+          加入用户群
+        </button>
+      </section>
     </main>
+
+    <div
+      v-if="showGroupQr"
+      class="fixed inset-0 z-50 flex items-center justify-center bg-black/55 px-md py-lg"
+      @click.self="showGroupQr = false"
+    >
+      <div class="w-full max-w-xl rounded-3xl bg-white p-lg md:p-xl shadow-2xl">
+        <div class="flex items-start justify-between gap-md">
+          <div>
+            <h3 class="text-xl font-semibold">加入用户群</h3>
+            <p class="text-sm text-text-secondary mt-1">可截图保存，也可点击下方按钮下载原图。</p>
+          </div>
+          <button
+            @click="showGroupQr = false"
+            class="shrink-0 rounded-full border border-border px-md py-xs text-sm text-text-secondary hover:bg-surface transition"
+          >
+            关闭
+          </button>
+        </div>
+
+        <div class="mt-lg rounded-2xl border border-border bg-surface/40 p-md">
+          <img
+            :src="groupQrImageUrl"
+            alt="CSUST DateDrop 用户群二维码"
+            class="mx-auto max-h-[70vh] w-full rounded-xl object-contain"
+          />
+        </div>
+
+        <div class="mt-lg flex flex-wrap gap-sm">
+          <a
+            :href="groupQrImageUrl"
+            download="csustdate-user-group.png"
+            class="inline-flex items-center justify-center rounded-full bg-primary px-lg py-sm text-white hover:bg-secondary transition"
+          >
+            保存图片
+          </a>
+          <button
+            @click="showGroupQr = false"
+            class="inline-flex items-center justify-center rounded-full border border-border px-lg py-sm hover:bg-surface transition"
+          >
+            我知道了
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -64,6 +120,8 @@ const history = ref([])
 const loadingActive = ref(true)
 const loadingHistory = ref(true)
 const actionMessage = ref('')
+const showGroupQr = ref(false)
+const groupQrImageUrl = '/email-guide/assets/1000062910.png'
 
 const formatTime = (time) => {
   if (!time) {
