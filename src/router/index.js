@@ -46,6 +46,21 @@ const routes = [
     name: 'WantNow',
     component: () => import('@/views/WantNow.vue'),
     meta: { requiresAuth: true }
+  },
+  {
+    path: '/privacy',
+    name: 'Privacy',
+    component: () => import('@/views/Privacy.vue')
+  },
+  {
+    path: '/terms',
+    name: 'Terms',
+    component: () => import('@/views/Terms.vue')
+  },
+  {
+    path: '/about',
+    name: 'About',
+    component: () => import('@/views/About.vue')
   }
 ]
 

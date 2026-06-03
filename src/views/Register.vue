@@ -99,7 +99,7 @@
 
           <div v-if="currentStep === 3" class="space-y-lg">
             <h3 class="text-xl font-semibold mb-lg">基本信息</h3>
-            
+
             <div>
               <label class="block text-sm font-semibold mb-sm">昵称</label>
               <input
@@ -141,6 +141,15 @@
               </select>
             </div>
 
+            <label class="flex items-start gap-sm cursor-pointer text-xs text-text-secondary">
+              <input v-model="form.agreed" type="checkbox" class="mt-0.5 shrink-0" required />
+              <span>
+                我已阅读并同意
+                <router-link to="/terms" target="_blank" class="text-primary hover:underline">《用户协议》</router-link>
+                和
+                <router-link to="/privacy" target="_blank" class="text-primary hover:underline">《隐私政策》</router-link>
+              </span>
+            </label>
           </div>
 
           <div class="flex gap-md mt-2xl">
@@ -229,7 +238,8 @@ const form = ref({
   password: '',
   nickname: '',
   gender: '',
-  campus: ''
+  campus: '',
+  agreed: false
 })
 
 const escapeHtml = (text) =>
@@ -388,6 +398,10 @@ const handleNext = async () => {
 }
 
 const handleRegister = async () => {
+  if (!form.value.agreed) {
+    alert('请先阅读并同意《用户协议》和《隐私政策》')
+    return
+  }
   loading.value = true
   try {
     const email = `${form.value.emailPrefix}@csust.edu.cn`

@@ -79,8 +79,23 @@
       </div>
     </main>
 
-    <footer class="border-t border-border py-xl text-center text-text-muted">
-      <p>&copy; 2024 CSUST DateDrop. All rights reserved.</p>
+    <footer class="border-t border-border py-xl text-center text-text-muted space-y-sm">
+      <p>&copy; 2025 CSUST DateDrop. All rights reserved.</p>
+      <div class="flex justify-center gap-md text-xs">
+        <router-link to="/about" class="hover:text-primary transition">关于我们</router-link>
+        <span>|</span>
+        <router-link to="/privacy" class="hover:text-primary transition">隐私政策</router-link>
+        <span>|</span>
+        <router-link to="/terms" class="hover:text-primary transition">用户协议</router-link>
+      </div>
+      <div class="flex justify-center items-center gap-md text-xs">
+        <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer" class="hover:text-primary transition">湘ICP备XXXXXXXX号-1</a>
+        <span>|</span>
+        <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=XXXXXXXXXXXX" target="_blank" rel="noopener noreferrer" class="hover:text-primary transition flex items-center gap-xs">
+          <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=small%20police%20badge%20icon%2016x16%20white%20on%20blue&image_size=square" alt="" class="w-4 h-4" />
+          湘公网安备 XXXXXXXXXXXXX 号
+        </a>
+      </div>
     </footer>
   </div>
 </template>
