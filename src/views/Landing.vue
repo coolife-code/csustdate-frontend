@@ -89,7 +89,7 @@
         <router-link to="/terms" class="hover:text-primary transition">用户协议</router-link>
       </div>
       <div class="flex justify-center items-center gap-md text-xs">
-        <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer" class="hover:text-primary transition">湘ICP备XXXXXXXX号-1</a>
+        <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer" class="hover:text-primary transition">湘ICP备2025115220号-5</a>
         <span>|</span>
         <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=XXXXXXXXXXXX" target="_blank" rel="noopener noreferrer" class="hover:text-primary transition flex items-center gap-xs">
           <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=small%20police%20badge%20icon%2016x16%20white%20on%20blue&image_size=square" alt="" class="w-4 h-4" />
