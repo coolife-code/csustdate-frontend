@@ -91,9 +91,9 @@
       <div class="flex justify-center items-center gap-md text-xs">
         <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer" class="hover:text-primary transition">湘ICP备2025115220号-5</a>
         <span>|</span>
-        <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=XXXXXXXXXXXX" target="_blank" rel="noopener noreferrer" class="hover:text-primary transition flex items-center gap-xs">
+        <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=43010302002264" target="_blank" rel="noopener noreferrer" class="hover:text-primary transition flex items-center gap-xs">
           <img src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=small%20police%20badge%20icon%2016x16%20white%20on%20blue&image_size=square" alt="" class="w-4 h-4" />
-          湘公网安备 XXXXXXXXXXXXX 号
+          湘公网安备 43010302002264 号
         </a>
       </div>
     </footer>
