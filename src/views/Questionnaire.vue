@@ -40,15 +40,21 @@
               </span>
             </div>
             <div v-if="question.question_type === 'single'" class="space-y-sm">
-              <label v-for="option in normalizeOptions(question.options)" :key="option" class="flex items-start gap-sm p-sm md:p-md rounded-xl border border-border bg-white hover:border-primary hover:bg-pink-50/30 transition cursor-pointer">
-                <input type="radio" :name="`q-${question.id}`" :value="option" v-model="answers[question.id]" class="mt-1" />
-                <span class="leading-relaxed">{{ option }}</span>
+              <label v-for="option in normalizeOptions(question.options)" :key="option.id" class="flex items-start gap-sm p-sm md:p-md rounded-xl border border-border bg-white hover:border-primary hover:bg-pink-50/30 transition cursor-pointer" :class="{ 'opacity-60 pointer-events-none': option.is_active === 0 }">
+                <input type="radio" :name="`q-${question.id}`" :value="option.id" :disabled="option.is_active === 0" v-model="answers[question.id]" class="mt-1" />
+                <span class="leading-relaxed">
+                  {{ option.option_text }}
+                  <span v-if="option.is_active === 0" class="text-xs text-text-secondary">（已失效）</span>
+                </span>
               </label>
             </div>
             <div v-else-if="question.question_type === 'multiple'" class="space-y-sm">
-              <label v-for="option in normalizeOptions(question.options)" :key="option" class="flex items-start gap-sm p-sm md:p-md rounded-xl border border-border bg-white hover:border-primary hover:bg-pink-50/30 transition cursor-pointer">
-                <input type="checkbox" :value="option" :checked="isChecked(question.id, option)" @change="toggleMulti(question.id, option)" class="mt-1" />
-                <span class="leading-relaxed">{{ option }}</span>
+              <label v-for="option in normalizeOptions(question.options)" :key="option.id" class="flex items-start gap-sm p-sm md:p-md rounded-xl border border-border bg-white hover:border-primary hover:bg-pink-50/30 transition cursor-pointer" :class="{ 'opacity-60 pointer-events-none': option.is_active === 0 }">
+                <input type="checkbox" :value="option.id" :disabled="option.is_active === 0" :checked="isChecked(question.id, option.id)" @change="toggleMulti(question.id, option.id)" class="mt-1" />
+                <span class="leading-relaxed">
+                  {{ option.option_text }}
+                  <span v-if="option.is_active === 0" class="text-xs text-text-secondary">（已失效）</span>
+                </span>
               </label>
             </div>
             <div v-else>
@@ -79,6 +85,7 @@ import { setCachedCompleteness } from '@/utils/questionnaireProgress'
 const router = useRouter()
 const sections = ref([])
 const answers = reactive({})
+const questionById = new Map()
 const saving = ref(false)
 const progress = ref({
   completeness: 0
@@ -115,28 +122,27 @@ const progressMessage = computed(() => {
 })
 
 const normalizeOptions = (options) => {
-  if (!options) {
+  if (!Array.isArray(options)) {
     return []
   }
-  if (Array.isArray(options)) {
-    return options
-  }
-  if (typeof options === 'object') {
-    return Object.values(options)
-  }
-  return []
+  return options.map((option) => {
+    if (typeof option === 'string') {
+      return { id: option, option_text: option, is_active: 1 }
+    }
+    return option
+  })
 }
 
-const isChecked = (questionId, option) => {
-  return Array.isArray(answers[questionId]) && answers[questionId].includes(option)
+const isChecked = (questionId, optionId) => {
+  return Array.isArray(answers[questionId]) && answers[questionId].includes(optionId)
 }
 
-const toggleMulti = (questionId, option) => {
+const toggleMulti = (questionId, optionId) => {
   const current = Array.isArray(answers[questionId]) ? [...answers[questionId]] : []
-  if (current.includes(option)) {
-    answers[questionId] = current.filter(item => item !== option)
+  if (current.includes(optionId)) {
+    answers[questionId] = current.filter(item => item !== optionId)
   } else {
-    answers[questionId] = [...current, option]
+    answers[questionId] = [...current, optionId]
   }
 }
 
@@ -157,13 +163,26 @@ const loadBootstrap = async () => {
   progress.value = res.data.progress || {
     completeness: 0
   }
+  questionById.clear()
+  for (const section of sections.value) {
+    for (const question of section.questions) {
+      questionById.set(question.id, question)
+    }
+  }
   const token = localStorage.getItem('token')
   if (token && typeof progress.value.completeness === 'number') {
     setCachedCompleteness(token, progress.value.completeness)
   }
   const serverAnswers = res.data.answers_by_question_id || {}
   for (const [questionId, answerValue] of Object.entries(serverAnswers)) {
-    answers[Number(questionId)] = answerValue
+    const qid = Number(questionId)
+    const question = questionById.get(qid)
+    if (question && question.question_type === 'single') {
+      // 单选：服务端回显为 [option_id]，radio v-model 需要标量
+      answers[qid] = Array.isArray(answerValue) ? (answerValue[0] ?? null) : answerValue
+    } else {
+      answers[qid] = answerValue
+    }
   }
 }
 
@@ -179,10 +198,17 @@ const loadProgress = async () => {
 const saveAll = async () => {
   const payload = Object.entries(answers)
     .filter(([, value]) => value !== '' && value !== null && value !== undefined && (!Array.isArray(value) || value.length > 0))
-    .map(([questionId, answerValue]) => ({
-      question_id: Number(questionId),
-      answer_value: answerValue
-    }))
+    .map(([questionId, answerValue]) => {
+      const item = { question_id: Number(questionId) }
+      const question = questionById.get(Number(questionId))
+      if (question && question.question_type === 'text') {
+        item.answer_text = answerValue
+      } else {
+        // 单选/多选统一提交 option_ids 数组
+        item.option_ids = Array.isArray(answerValue) ? answerValue : [answerValue]
+      }
+      return item
+    })
   if (payload.length === 0) {
     saveMessage.value = {
       type: 'error',
