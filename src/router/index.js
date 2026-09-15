@@ -71,7 +71,11 @@ const routes = [
 
 const router = createRouter({
   history: createWebHistory(),
-  routes
+  routes,
+  scrollBehavior() {
+    // 每次导航都回到页面顶部，避免从长页面跳转时沿用旧的滚动位置
+    return { top: 0 }
+  }
 })
 
 router.beforeEach(async (to, from, next) => {
