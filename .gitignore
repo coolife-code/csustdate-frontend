@@ -3,6 +3,9 @@ dist/
 .DS_Store
 *.log
 
+# APK 由云服务器 Nginx 托管，本地副本仅用于 dev 预览，不入库
+public/apk/*.apk
+
 .env*
 !.env.example
 !.env.production.example

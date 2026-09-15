@@ -35,9 +35,6 @@
                 </span>
                 {{ question.question_text }}
               </p>
-              <span class="text-xs md:text-sm px-sm py-1 rounded-full bg-white border border-border text-text-secondary whitespace-nowrap">
-                {{ getQuestionHint(question.id) }}
-              </span>
             </div>
             <div v-if="question.question_type === 'single'" class="space-y-sm">
               <label v-for="option in normalizeOptions(question.options)" :key="option.id" class="flex items-start gap-sm p-sm md:p-md rounded-xl border border-border bg-white hover:border-primary hover:bg-pink-50/30 transition cursor-pointer" :class="{ 'opacity-60 pointer-events-none': option.is_active === 0 }">
@@ -91,7 +88,6 @@ const progress = ref({
   completeness: 0
 })
 const saveMessage = ref('')
-const hintLabels = ['再答一题更懂你', '缘分加载中', '高匹配加速中', '认真答更准', '冲刺理想匹配']
 
 const totalQuestionCount = computed(() => {
   return sections.value.reduce((total, section) => total + section.questions.length, 0)
@@ -153,13 +149,15 @@ const getQuestionNo = (sectionIndex, questionIndex) => {
   return beforeCount + questionIndex + 1
 }
 
-const getQuestionHint = (questionId) => {
-  return hintLabels[questionId % hintLabels.length]
-}
-
 const loadBootstrap = async () => {
   const res = await api.get('/questionnaire/bootstrap')
   sections.value = res.data.sections || []
+  // 每次进入随机打乱各板块题目顺序
+  sections.value.forEach((section) => {
+    if (Array.isArray(section.questions)) {
+      section.questions.sort(() => Math.random() - 0.5)
+    }
+  })
   progress.value = res.data.progress || {
     completeness: 0
   }

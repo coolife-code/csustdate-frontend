@@ -53,6 +53,8 @@
     <footer class="border-t border-border py-xl text-center text-xs text-text-muted space-y-sm">
       <p>&copy; 2025 CSUST DateDrop. All rights reserved.</p>
       <div class="flex justify-center gap-md">
+        <router-link to="/download" class="hover:text-primary transition">下载 App</router-link>
+        <span>|</span>
         <router-link to="/privacy" class="hover:text-primary transition">隐私政策</router-link>
         <span>|</span>
         <router-link to="/terms" class="hover:text-primary transition">用户协议</router-link>

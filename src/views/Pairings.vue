@@ -69,7 +69,7 @@
       class="fixed inset-0 z-50 flex items-center justify-center bg-black/55 px-md py-lg"
       @click.self="showGroupQr = false"
     >
-      <div class="w-full max-w-xl rounded-3xl bg-white p-lg md:p-xl shadow-2xl">
+      <div class="flex max-h-[90vh] w-full max-w-xl flex-col rounded-3xl bg-white p-lg md:p-xl shadow-2xl">
         <div class="flex items-start justify-between gap-md">
           <div>
             <h3 class="text-xl font-semibold">加入用户群</h3>
@@ -83,18 +83,32 @@
           </button>
         </div>
 
-        <div class="mt-lg rounded-2xl border border-border bg-surface/40 p-md">
-          <img
-            :src="groupQrImageUrl"
-            alt="CSUST DateDrop 用户群二维码"
-            class="mx-auto max-h-[70vh] w-full rounded-xl object-contain"
-          />
+        <div class="mt-lg overflow-y-auto pr-1">
+          <div class="rounded-2xl border border-border bg-surface/40 p-md">
+            <img
+              :src="groupQrImageUrl"
+              alt="CSUST DateDrop 用户群二维码"
+              class="mx-auto w-full rounded-xl object-contain"
+            />
+          </div>
+
+          <div class="mt-lg rounded-2xl border border-border bg-surface/40 p-md">
+            <h4 class="text-base font-semibold">微信 · 校园卡办理咨询</h4>
+            <p class="mt-2 text-sm leading-relaxed text-text-secondary">
+              感谢长理电信校园网服务中心的赞助，本项目重新开始启动运营。有校园卡办理想法的同学，可以扫码添加下方微信咨询。
+            </p>
+            <img
+              :src="wechatQrImageUrl"
+              alt="CSUST DateDrop 微信咨询二维码"
+              class="mx-auto mt-md w-full rounded-xl object-contain"
+            />
+          </div>
         </div>
 
         <div class="mt-lg flex flex-wrap gap-sm">
           <a
             :href="groupQrImageUrl"
-            download="csustdate-user-group.png"
+            download="csustdate-user-group.jpg"
             class="inline-flex items-center justify-center rounded-full bg-primary px-lg py-sm text-white hover:bg-secondary transition"
           >
             保存图片
@@ -121,7 +135,8 @@ const loadingActive = ref(true)
 const loadingHistory = ref(true)
 const actionMessage = ref('')
 const showGroupQr = ref(false)
-const groupQrImageUrl = '/email-guide/assets/1000062910.png'
+const groupQrImageUrl = '/email-guide/assets/用户群.jpg'
+const wechatQrImageUrl = '/email-guide/assets/微信图片_20260915145839_37_123.jpg'
 
 const formatTime = (time) => {
   if (!time) {

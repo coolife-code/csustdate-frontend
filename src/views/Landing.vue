@@ -84,6 +84,8 @@
       <div class="flex justify-center gap-md text-xs">
         <router-link to="/about" class="hover:text-primary transition">关于我们</router-link>
         <span>|</span>
+        <router-link to="/download" class="hover:text-primary transition">下载 App</router-link>
+        <span>|</span>
         <router-link to="/privacy" class="hover:text-primary transition">隐私政策</router-link>
         <span>|</span>
         <router-link to="/terms" class="hover:text-primary transition">用户协议</router-link>
