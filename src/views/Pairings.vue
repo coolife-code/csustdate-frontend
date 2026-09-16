@@ -54,13 +54,15 @@
 
       <section class="rounded-2xl border border-border bg-white p-xl shadow-sm">
         <h2 class="text-xl font-semibold mb-md">用户群</h2>
-        <p class="text-sm text-text-secondary mb-lg">想找组织的话，可以进群看看通知和大家的聊天节奏。</p>
-        <button
-          @click="showGroupQr = true"
-          class="px-lg py-sm rounded-full bg-primary text-white hover:bg-secondary transition"
-        >
-          加入用户群
-        </button>
+        <p class="text-sm text-text-secondary mb-lg">想找组织的话，可以进群看看通知和大家的聊天节奏。群不会吃人，放心进。</p>
+        <div class="flex flex-wrap items-center gap-sm">
+          <button
+            @click="showGroupQr = true"
+            class="px-lg py-sm rounded-full bg-primary text-white hover:bg-secondary transition"
+          >
+            加入用户群
+          </button>
+        </div>
       </section>
     </main>
 
@@ -90,29 +92,46 @@
               alt="CSUST DateDrop 用户群二维码"
               class="mx-auto w-full rounded-xl object-contain"
             />
+            <a
+              :href="groupQrImageUrl"
+              download="csustdate-user-group.jpg"
+              class="mt-md inline-flex items-center justify-center rounded-full bg-primary px-lg py-sm text-white hover:bg-secondary transition"
+            >
+              保存图片
+            </a>
           </div>
 
           <div class="mt-lg rounded-2xl border border-border bg-surface/40 p-md">
             <h4 class="text-base font-semibold">微信 · 校园卡办理咨询</h4>
             <p class="mt-2 text-sm leading-relaxed text-text-secondary">
-              感谢长理电信校园网服务中心的赞助，本项目重新开始启动运营。有校园卡办理想法的同学，可以扫码添加下方微信咨询。
+              感谢长理电信校园网服务中心的赞助，本项目得以重新开始运营。有校园卡办理想法的同学，可以扫码添加下方微信咨询。办卡之前建议先看看套餐性价比，心里有数再出手，不吃亏。
+            </p>
+            <p class="mt-md text-center">
+              <router-link
+                to="/telecom"
+                class="text-sm text-text-secondary underline underline-offset-4 hover:text-primary transition"
+              >
+                什么是校园网和校园卡
+              </router-link>
             </p>
             <img
               :src="wechatQrImageUrl"
               alt="CSUST DateDrop 微信咨询二维码"
-              class="mx-auto mt-md w-full rounded-xl object-contain"
+              class="mx-auto mt-sm w-full rounded-xl object-contain"
             />
+            <div class="mt-md flex flex-wrap items-center justify-center gap-sm">
+              <a
+                :href="wechatQrImageUrl"
+                download="csustdate-wechat-consult.jpg"
+                class="inline-flex items-center justify-center rounded-full bg-primary px-lg py-sm text-white hover:bg-secondary transition"
+              >
+                保存图片
+              </a>
+            </div>
           </div>
         </div>
 
-        <div class="mt-lg flex flex-wrap gap-sm">
-          <a
-            :href="groupQrImageUrl"
-            download="csustdate-user-group.jpg"
-            class="inline-flex items-center justify-center rounded-full bg-primary px-lg py-sm text-white hover:bg-secondary transition"
-          >
-            保存图片
-          </a>
+        <div class="mt-lg flex flex-wrap justify-end gap-sm">
           <button
             @click="showGroupQr = false"
             class="inline-flex items-center justify-center rounded-full border border-border px-lg py-sm hover:bg-surface transition"

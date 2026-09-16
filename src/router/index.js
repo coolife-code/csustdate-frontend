@@ -66,6 +66,11 @@ const routes = [
     path: '/download',
     name: 'Download',
     component: () => import('@/views/Download.vue')
+  },
+  {
+    path: '/telecom',
+    name: 'TelecomGuide',
+    component: () => import('@/views/TelecomGuide.vue')
   }
 ]
 
