@@ -13,6 +13,54 @@
       </div>
     </header>
     <main class="max-w-4xl mx-auto px-md py-xl space-y-lg">
+      <div class="flex justify-end">
+        <button
+          @click="activityOpen = true"
+          class="flex items-center gap-xs text-xs text-text-secondary transition hover:text-primary"
+        >
+          <span class="text-accent leading-none">✦</span>
+          <span class="font-serif font-semibold">当前活动</span>
+          <svg class="w-3.5 h-3.5" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+          </svg>
+        </button>
+      </div>
+      <teleport to="body">
+        <div v-if="activityOpen" class="fixed inset-0 z-50 flex items-center justify-center p-md">
+          <div class="absolute inset-0 bg-black/40" @click="activityOpen = false"></div>
+          <div class="relative w-full max-w-lg border border-border bg-white shadow-2xl max-h-[85vh] overflow-y-auto">
+            <div class="flex items-center justify-between border-b border-border px-md py-sm">
+              <span class="flex items-center gap-sm">
+                <span class="text-accent leading-none">✦</span>
+                <span class="font-serif font-semibold">当前活动</span>
+              </span>
+              <button
+                @click="activityOpen = false"
+                class="text-text-muted transition hover:text-text-primary"
+                aria-label="关闭"
+              >
+                <svg class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M4.72 4.72a.75.75 0 011.06 0L10 8.94l4.22-4.22a.75.75 0 111.06 1.06L11.06 10l4.22 4.22a.75.75 0 11-1.06 1.06L10 11.06l-4.22 4.22a.75.75 0 01-1.06-1.06L8.94 10 4.72 5.78a.75.75 0 010-1.06z" clip-rule="evenodd" />
+                </svg>
+              </button>
+            </div>
+            <div class="bg-gradient-to-b from-white to-rose-50/30 px-md py-lg space-y-lg">
+              <h3 class="text-2xl font-serif font-semibold leading-snug">csustdate 项目正式重启！新学期来认识新伙伴 👥</h3>
+              <router-link to="/telecom" class="text-sm text-accent tracking-wide transition hover:underline">
+                在此特别感谢长理校园网服务中心赞助 🎉
+              </router-link>
+              <div class="space-y-sm">
+                <p class="text-text-secondary">新学期限时玩法上线：</p>
+                <ul class="space-y-sm text-text-secondary">
+                  <li class="flex items-center gap-sm"><span aria-hidden="true">✅</span>每两天开启一次匹配</li>
+                  <li class="flex items-center gap-sm"><span aria-hidden="true">✅</span>同性异性均可匹配</li>
+                </ul>
+              </div>
+              <p class="text-text-secondary">蹲一个有缘人，开学的故事就此开启 💫</p>
+            </div>
+          </div>
+        </div>
+      </teleport>
       <div class="rounded-2xl border border-border bg-white/85 p-lg shadow-sm">
         <p class="text-sm text-text-secondary">每周二，你的教育邮箱会如约收到一封来信</p>
         <p class="text-sm text-text-secondary mt-1">那是算法悄悄为你觅得的，一个灵魂相近的人</p>
@@ -87,6 +135,7 @@ const match = ref(null)
 const registeredCount = ref(null)
 const actionMessage = ref('')
 const currentUserId = ref(null)
+const activityOpen = ref(false)
 
 const isFullyUnlocked = computed(() => {
   return match.value?.status === 'both_unlocked' || match.value?.status === 'paired'
