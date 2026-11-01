@@ -77,13 +77,14 @@ const form = ref({
 const loading = ref(false)
 
 const handleLogin = async () => {
-  if (!form.value.emailPrefix || form.value.emailPrefix.includes('@')) {
-    alert('请输入正确的邮箱前缀')
+  const emailInput = form.value.emailPrefix.trim()
+  if (!emailInput) {
+    alert('请输入邮箱')
     return
   }
   loading.value = true
   try {
-    const email = `${form.value.emailPrefix}@csust.edu.cn`
+    const email = emailInput.includes('@') ? emailInput : `${emailInput}@csust.edu.cn`
     await userStore.login(email, form.value.password)
     const completeness = await getQuestionnaireCompleteness({
       token: userStore.token,
